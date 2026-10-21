@@ -1,0 +1,30 @@
+services:
+  wordpress:
+    image: wordpress:latest
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: sdlda
+      WORDPRESS_DB_PASSWORD: sdlda
+      WORDPRESS_DB_NAME: sdlda
+    depends_on:
+      - db
+    volumes:
+      - wp_data:/var/www/html
+
+  db:
+    image: mysql:8.0
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: sdlda
+      MYSQL_USER: sdlda
+      MYSQL_PASSWORD: sdlda
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  wp_data:
+  db_data:
